@@ -2,22 +2,26 @@ package br.com.mackenzie.ppads.sgaapo.repository;
 
 import br.com.mackenzie.ppads.sgaapo.entity.APO;
 import br.com.mackenzie.ppads.sgaapo.entity.Aluno;
+import br.com.mackenzie.ppads.sgaapo.entity.Professor;
+import br.com.mackenzie.ppads.sgaapo.enus.StatusAPO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Repositório para a entidade APO.
- * JpaRepository<APO, Long> -> A entidade é APO, a Chave Primária é Long.
- * O Spring Data JPA cria automaticamente métodos como:
- * save(), findById(), findAll(), deleteById(), etc.
- */
 @Repository
 public interface ApoRepository extends JpaRepository<APO, Long> {
 
-    // O Spring é inteligente. Se você definir um método como este,
-    // ele automaticamente cria a query para buscar todos os APOs de um Aluno.
+    // Busca os APOs de um aluno específico
     List<APO> findByAluno(Aluno aluno);
+
+    // Busca os APOs de um orientador específico
+    List<APO> findByOrientador(Professor orientador);
     
+    // Busca os APOs de um orientador filtrando pelo status
+    // Ex: O professor quer ver apenas os que estão "EM_ANALISE_ORIENTADOR"
+    List<APO> findByOrientadorAndStatus(Professor orientador, StatusAPO status);
+
+    // ... outros métodos
+    List<APO> findByStatus(StatusAPO status);
 }
